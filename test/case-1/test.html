@@ -1,0 +1,106 @@
+<!-- <div id='product-component-6b8b1d91c1a'></div> -->
+<div class="product" id="product-1"></div>
+<script type="text/javascript">
+/*<![CDATA[*/
+
+(function () {
+    var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+    if (window.ShopifyBuy) {
+        if (window.ShopifyBuy.UI) {
+            ShopifyBuyInit();
+        } else {
+            loadScript();
+        }
+    } else {
+        loadScript();
+    }
+
+    function loadScript() {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = scriptURL;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+        script.onload = ShopifyBuyInit;
+    }
+
+    function ShopifyBuyInit() {
+        var client = ShopifyBuy.buildClient({
+            domain: 'umlaut-shop.myshopify.com',
+            apiKey: '32c5736a21d91d340e9134c5e879618a',
+            appId: '6',
+        });
+
+        var mkp_productPrice = '<div class="section__wcontent_msrp">$%PRICE%</div>';
+        var mkp_productBuyButton = '<a class="button w-button" href="%LINK%">Add to Cart</a>';
+
+        var productBuySelector = '#product-1';
+
+        client.fetchProduct('10481212620').then(function(product) {
+            var mkp = '';
+            var elem = document.querySelector(productBuySelector);
+            if (!elem) return;
+
+            console.log(product.selectedVariant);
+            mkp += mkp_productPrice.replace(
+                /%PRICE%/g, product.selectedVariant.price);
+            mkp += mkp_productBuyButton.replace(
+                /%LINK%/g, product.selectedVariant.checkoutUrl(1));
+
+            updateCartTabButton();
+            bindEventListeners();
+
+            elem.innerHTML = mkp;
+
+        });
+
+        ShopifyBuy.UI.onReady(client).then(function (ui) {
+            ui.createComponent('product', {
+                id: [10481212620],
+                variantId: 38509405964,
+                node: document.getElementById('product-component-6b8b1d91c1a'),
+                moneyFormat: '%24%7B%7Bamount%7D%7D',
+                options: {
+                    "product": {
+                        "variantId": "38509405964",
+                        "width": "380px",
+                        "styles": {
+                            "button": {
+                                "background-color": "rgb(56, 152, 236)",
+                                "background-image": "linear-gradient(rgb(39, 116, 194), rgb(39, 116, 194))",
+                                "box-sizin": "border-box",
+                                "colo": "rgb(0, 0, 0)",
+                                "curso": "pointer",
+                                "displa": "flex",
+                                "flex-basi": "auto",
+                                "flex-gro": "0",
+                                "flex-shrin": "1",
+                                "font-famil": "Rift, Arial, sans-serif",
+                                "font-siz": "21px",
+                                "font-weigh": "normal",
+                                "heigh": "50px",
+                                "letter-spacin": "2.5593597888946533px",
+                                "line-heigh": "20px",
+                                "margin-righ": "15px",
+                                "margin-to": "15px",
+                                "padding-botto": "15px",
+                                "padding-lef": "20px",
+                                "padding-righ": "20px",
+                                "padding-to": "15px",
+                                "text-alig": "center",
+                                "text-decoratio": "none",
+                                "text-transfor": "uppercase",
+                                ":hover": {
+                                    "background-color": "rgb(56, 152, 236)",
+                                    "background-image": "linear-gradient(rgb(224, 177, 72), rgb(224, 177, 72))"
+                                },
+                                "border-radius": "0"
+                            }
+                        }
+                    },
+                }
+            });
+        });
+    }
+})();
+/*]]>*/
+</script>
