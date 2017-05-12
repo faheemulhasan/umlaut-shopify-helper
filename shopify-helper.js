@@ -8,8 +8,9 @@
 var SHOPIFY_API_KEY = '32c5736a21d91d340e9134c5e879618a';
 var SHOPIFY_CONFIG = {
     cartQuantityDisplaySelector: '[data-cart-quantity]',
-    cartQuantityDisplayEmptyClass: 'cart-empty',
+    cartQuantityDisplayEmptyClass: 'cart_empty',
     cartButtonSelector: '[data-cart-button]',
+    cartButtonActiveClass: 'cart_active',
     cartCheckoutButtonClasses: 'submit-button w-button',
     productIdContainerSelector: '[data-product-id]',
     productVariantsMenuSelector: '[data-product-variants]',
@@ -423,7 +424,7 @@ var SHOPIFY_TEMPLATES = [
 
 $(function () {
 
-    var DEBUG = true;
+    var DEBUG = false;
 
     var client;
     var products;
@@ -611,7 +612,15 @@ $(function () {
 
     function cartButtonEventHandler(e) {
         setPreviousFocusItem(this);
-        openCart();
+        var $btn = $(x.cartButtonSelector);
+        if ($btn.hasClass(x.cartButtonActiveClass)) {
+            $btn.removeClass(x.cartButtonActiveClass);
+            closeCart();
+
+        } else {
+            $btn.addClass(x.cartButtonActiveClass);
+            openCart();
+        }
     }
 
     function addButtonEventHandler(e) {
