@@ -5,8 +5,6 @@
 * https://github.com/aravindanve
 **/
 
-// cart button
-
 var SHOPIFY_API_KEY = '32c5736a21d91d340e9134c5e879618a';
 var SHOPIFY_CONFIG = {
     cartQuantityDisplaySelector: '[data-cart-quantity]',
@@ -624,8 +622,6 @@ $(function () {
         addOrUpdateVariant(product.selectedVariant);
         setPreviousFocusItem(e.target);
         focusCheckout();
-
-        console.log(product);
         return false;
     }
 
@@ -897,7 +893,6 @@ $(function () {
         decimalSeparator, localeDecimalSeparator
 
     ) {
-        console.log('formatAsMoney', arguments);
         currency = currency || '$';
         thousandSeparator = thousandSeparator || ',';
         decimalSeparator = decimalSeparator || '.';
