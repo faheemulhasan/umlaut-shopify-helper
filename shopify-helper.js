@@ -432,6 +432,8 @@ $(function () {
     var cartLineItemCount;
     var previousFocusItem;
 
+    var alreadyInCart = [];
+
     var x = SHOPIFY_CONFIG;
 
     function log() {
@@ -458,6 +460,12 @@ $(function () {
     }
 
     function setupCart() {
+        function done() {
+            $(x.cartButtonSelector)
+                .on('click', cartButtonEventHandler);
+            log('setupCart done');
+            loadProducts();
+        }
         client = ShopifyBuy.buildClient({
             domain: 'umlaut-shop.myshopify.com',
             apiKey: SHOPIFY_API_KEY,
@@ -472,7 +480,15 @@ $(function () {
                     .then(function(remoteCart) {
                         cart = remoteCart;
                         cartLineItemCount = cart.lineItems.length;
+                        alreadyInCart = [];
+                        if (cart.lineItems.length) {
+                            for (var i = 0; i < cart.lineItems.length; i++) {
+                                alreadyInCart.push(
+                                cart.lineItems[i].product_id);
+                            }
+                        }
                         renderCartItems();
+                        done();
                     });
 
         } else {
@@ -482,20 +498,15 @@ $(function () {
                     cart = newCart;
                     localStorage.setItem('lastCartId', cart.id);
                     cartLineItemCount = 0;
+                    done();
                 });
         }
-
-        $(x.cartButtonSelector)
-            .on('click', cartButtonEventHandler);
-
-        log('setupCart done');
-        loadProducts();
     }
     
     function loadProducts() {
         products = [];
         products._productRefs = {};
-        products._productIds = [];
+        products._productIds = [].concat(alreadyInCart);
         products._productLookup = {};
 
         $(x.productIdContainerSelector).each(function () {
@@ -528,11 +539,16 @@ $(function () {
 
         }).then(function (items) {
             for (var i = 0; i < items.length; i++) {
-                items[i].elements = products._productRefs[items[i].id];
-                if (items[i].elements) {
-                    products.push(items[i]);
-                    products._productLookup[items[i].id] = items[i];
-                }
+                items[i].elements = products._productRefs[items[i].id] || {
+                    productId: items[i].product_id,
+                    $variantsMenu: $(),
+                    $priceDisplay: $(),
+                    $comparePriceDisplay: $(),
+                    $addButton: $(),
+                    $idContainer: $()
+                };
+                products.push(items[i]);
+                products._productLookup[items[i].id] = items[i];
                 items[i].elements.$addButton.each(function () {
                     this._product = items[i];
                 });

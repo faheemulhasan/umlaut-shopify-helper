@@ -1,0 +1,26 @@
+{
+  "name": "umlaut-shopify-helper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "shopify-helper.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "uglify-js": "^3.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://aravindanve@github.com/aravindanve/umlaut-shopify-helper.git"
+  },
+  "author": "Aravindan Ve",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/aravindanve/umlaut-shopify-helper/issues"
+  },
+  "homepage": "https://github.com/aravindanve/umlaut-shopify-helper#readme"
+}

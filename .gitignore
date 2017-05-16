@@ -1,2 +1,4 @@
 .DS_Store
+*.log
 js-buy-sdk-master
+node_modules
