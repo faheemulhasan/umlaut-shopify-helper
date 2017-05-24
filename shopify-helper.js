@@ -420,8 +420,6 @@ var SHOPIFY_TEMPLATES = [
 </script>'
 ];
 
-
-
 $(function () {
 
     var DEBUG = false;
@@ -628,13 +626,10 @@ $(function () {
 
     function cartButtonEventHandler(e) {
         setPreviousFocusItem(this);
-        var $btn = $(x.cartButtonSelector);
-        if ($btn.hasClass(x.cartButtonActiveClass)) {
-            $btn.removeClass(x.cartButtonActiveClass);
+        if ($(x.cartButtonSelector).hasClass(x.cartButtonActiveClass)) {
             closeCart();
 
         } else {
-            $btn.addClass(x.cartButtonActiveClass);
             openCart();
         }
     }
@@ -766,10 +761,12 @@ $(function () {
     }
 
     function openCart() {
+        $(x.cartButtonSelector).addClass(x.cartButtonActiveClass);
         $('.cart').addClass('js-active');
     }
 
     function closeCart() {
+        $(x.cartButtonSelector).removeClass(x.cartButtonActiveClass);
         $('.cart').removeClass('js-active');
         $('.overlay').removeClass('js-active');
     }
