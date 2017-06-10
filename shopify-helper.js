@@ -11,6 +11,8 @@ var SHOPIFY_CONFIG = {
     cartQuantityDisplayEmptyClass: 'cart_empty',
     cartButtonSelector: '[data-cart-button]',
     cartButtonActiveClass: 'cart_active',
+    cartSmartButton: '[data-cart-smart-button]',
+    cartSmartButtonHiddenClass: 'isHidden',
     cartCheckoutButtonClasses: 'submit-button w-button',
     productIdContainerSelector: '[data-product-id]',
     productVariantsMenuSelector: '[data-product-variants]',
@@ -450,7 +452,15 @@ $(function () {
 
         for (var i = 0; i < checkoutClasses.length; i++) {
             $('.btn--cart-checkout')
-                .addClass(checkoutClasses[i]);
+                .addClass(checkoutClasses[i])
+                .closest('form')
+                .on('submit', function (e) {
+                    if (cart && 
+                        (!cart.lineItems.length || 
+                            !cart.lineItemCount)) {
+                        return false;
+                    }
+                });
         }
 
         log('init done');
@@ -933,10 +943,16 @@ $(function () {
                 .html(cart.lineItemCount)
                 .removeClass(x.cartQuantityDisplayEmptyClass);
 
+            $(x.cartSmartButton)
+              .removeClass(x.cartSmartButtonHiddenClass);
+
         } else {
             $(x.cartQuantityDisplaySelector)
                 .html(0)
                 .addClass(x.cartQuantityDisplayEmptyClass);
+
+            $(x.cartSmartButton)
+              .addClass(x.cartSmartButtonHiddenClass);
         }
     }
 
