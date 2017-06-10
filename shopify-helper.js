@@ -453,8 +453,7 @@ $(function () {
         for (var i = 0; i < checkoutClasses.length; i++) {
             $('.btn--cart-checkout')
                 .addClass(checkoutClasses[i])
-                .closest('form')
-                .on('submit', function (e) {
+                .on('click', function (e) {
                     if (cart && 
                         (!cart.lineItems.length || 
                             !cart.lineItemCount)) {
