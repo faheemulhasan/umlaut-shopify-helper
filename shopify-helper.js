@@ -805,7 +805,6 @@ $(function () {
             var $cartItem = $('.cart')
                 .find('.cart-item[data-cart-variant-id="' + variantId + '"]');
 
-            console.log('updatedCheckoutLineItem', updatedCheckoutLineItem);
             if (checkout.lineItems.length >= lineItemsLength) {
                 $cartItem
                     .find('.cart-item__quantity')
