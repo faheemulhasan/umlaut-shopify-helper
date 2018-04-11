@@ -425,7 +425,7 @@ var SHOPIFY_TEMPLATES = [
 
 $(function () {
 
-    var DEBUG = true;
+    var DEBUG = false;
 
     var client;
     var products;
