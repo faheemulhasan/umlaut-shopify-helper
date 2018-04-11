@@ -737,12 +737,10 @@ $(function () {
     }
 
     function fieldQuantityHandler(evt) {
-        var productId = parseInt(
-            $(this).closest('.cart-item')
-                .attr('data-cart-product-id'), 10);
-        var variantId = parseInt(
-            $(this).closest('.cart-item')
-                .attr('data-cart-variant-id'), 10);
+        var productId = $(this).closest('.cart-item')
+                .attr('data-cart-product-id');
+        var variantId = $(this).closest('.cart-item')
+                .attr('data-cart-variant-id');
 
         var variant = getVariant(productId, variantId);
         var checkoutLineItem = findCartItemByVariantId(variant.id);
@@ -793,6 +791,7 @@ $(function () {
     }
 
     function updateVariantInCart(checkoutLineItem, quantity) {
+        quantity = +quantity;
         var variantId = checkoutLineItem.variant.id;
         var lineItemsLength = checkout.lineItems.length;
 
