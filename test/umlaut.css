@@ -194,7 +194,7 @@ td, th {
     font-style: normal
 }
 
-[class^="w-icon-"], [class * =" w-icon-"] {
+[class^="w-icon-"], [class*=" w-icon-"] {
     font-family: 'webflow-icons';
     speak: none;
     font-style: normal;
@@ -1239,7 +1239,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .w-slider-arrow-left [class^="w-icon-"], .w-slider-arrow-right [class^="w-icon-"],
-.w-slider-arrow-left [class * =" w-icon-"], .w-slider-arrow-right [class * =" w-icon-"] {
+.w-slider-arrow-left [class*=" w-icon-"], .w-slider-arrow-right [class*=" w-icon-"] {
     position: absolute
 }
 
