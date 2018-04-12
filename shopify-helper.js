@@ -862,14 +862,14 @@ $(function () {
                 $cartItemContainer
                     .find('.js-hidden')
                     .removeClass('js-hidden');
-            }, 0)
+            }, 0);
+
+            updateTotalCartPricing();
+            updateCartTabButton();
 
         }).catch(function (error) {
             console.error('error updating cart', error);
         });
-
-        updateTotalCartPricing();
-        updateCartTabButton();
     }
 
     function renderCartItem(lineItem) {
@@ -926,7 +926,8 @@ $(function () {
             $cartItemContainer
                 .find('.js-hidden')
                 .removeClass('js-hidden');
-        }, 0)
+        }, 0);
+
         updateTotalCartPricing();
     }
 
