@@ -6,6 +6,11 @@
 **/
 
 $(function () {
+  if (window._shopifyLoaded) {
+    return;
+  } else {
+    window._shopifyLoaded = true;
+  }
 
   var SHOPIFY_STOREFRONT_ACCESS_TOKEN = window.SHOPIFY_STOREFRONT_ACCESS_TOKEN || '10bd4f387363aa3cd2fc3de336613378';
   var SHOPIFY_DOMAIN = window.SHOPIFY_DOMAIN || 'umlaut-shop.myshopify.com';
@@ -76,12 +81,10 @@ $(function () {
   });
 
   function onDOMModificationsLoaded() {
-    console.log('onDOMModificationsLoaded');
+    // do nothing
   }
 
   function onPageProductsLoaded() {
-    console.log('onPageProductsLoaded', products);
-
     for (var i = 0; i < products.length; i++) {
       // attach add to cart listener
       products[i].elements.$addButton
@@ -100,8 +103,6 @@ $(function () {
   }
 
   function onCheckoutLoaded() {
-    console.log('onCheckoutLoaded', checkout);
-
     // setup cart
     $(x.cartButtonSelector).on('click', cartButtonEventHandler);
 
@@ -147,8 +148,6 @@ $(function () {
   }
 
   function updateDOMProductPrice(product) {
-    console.log('updateDOMProductPrice', product, product.elements.$priceDisplay);
-
     product.elements.$priceDisplay
       .html('$' + product.selectedVariant.price);
     product.elements.$comparePriceDisplay
@@ -475,6 +474,12 @@ $(function () {
 
   // apply dom modifications
   setTimeout(function () {
+    if (window._shopifyDOMModificationsLoaded) {
+      return;
+    } else {
+      window._shopifyDOMModificationsLoaded = true;
+    }
+
     for (var i = 0; i < SHOPIFY_STYLES.length; i++) {
       $('head').append($(SHOPIFY_STYLES[i]));
     }
@@ -489,10 +494,17 @@ $(function () {
         .addClass(checkoutClasses[i]);
     }
 
+    onDOMModificationsLoaded();
+
   }, 0);
 
   // process products on page
   setTimeout(function () {
+    if (window._shopifyProductsLoaded) {
+      return;
+    } else {
+      window._shopifyProductsLoaded = true;
+    }
     $(x.productIdContainerSelector).each(function () {
       var $elem = $(this);
 
@@ -543,6 +555,11 @@ $(function () {
 
   // load cart
   setTimeout(function () {
+    if (window._shopifyCheckoutLoaded) {
+      return;
+    } else {
+      window._shopifyCheckoutLoaded = true;
+    }
     var lastCheckoutId = localStorage && localStorage.getItem('lastCheckoutId');
 
     if (lastCheckoutId) {
