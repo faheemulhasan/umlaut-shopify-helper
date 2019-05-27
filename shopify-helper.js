@@ -562,10 +562,29 @@ $(function () {
     }
     var lastCheckoutId = localStorage && localStorage.getItem('lastCheckoutId');
 
+    function createCheckout() {
+      client.checkout
+        .create()
+        .then(function (newCheckout) {
+          checkout = newCheckout;
+          checkoutLineItemCount = 0;
+          localStorage.setItem('lastCheckoutId', checkout.id);
+          // done
+          updateCartTabButton();
+          onCheckoutLoaded();
+        });
+    }
+
     if (lastCheckoutId) {
       client.checkout
         .fetch(lastCheckoutId)
         .then(function (remoteCheckout) {
+          // create new checkout if already complete
+          if (remoteCheckout.completedAt) {
+            createCheckout()
+            return
+          }
+
           checkout = remoteCheckout;
           checkoutLineItemCount = checkout.lineItems.length;
 
@@ -604,16 +623,7 @@ $(function () {
         });
 
     } else {
-      client.checkout
-        .create()
-        .then(function (newCheckout) {
-          checkout = newCheckout;
-          checkoutLineItemCount = 0;
-          localStorage.setItem('lastCheckoutId', checkout.id);
-          // done
-          updateCartTabButton();
-          onCheckoutLoaded();
-        });
+      createCheckout()
     }
 
   }, 0);
