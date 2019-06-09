@@ -620,6 +620,10 @@ $(function () {
             updateCartTabButton();
             onCheckoutLoaded();
           }
+        })
+        .catch(function (err) {
+          console.log('checkout fetch error', err)
+          createCheckout()
         });
 
     } else {
