@@ -579,8 +579,8 @@ $(function () {
       client.checkout
         .fetch(lastCheckoutId)
         .then(function (remoteCheckout) {
-          // create new checkout if already complete
-          if (remoteCheckout.completedAt) {
+          // create new checkout if already complete or no checkout returned
+          if (!remoteCheckout || remoteCheckout.completedAt) {
             createCheckout()
             return
           }
